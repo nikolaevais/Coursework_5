@@ -24,3 +24,10 @@ class DBManager:
     def get_companies_and_vacancies_count(self):
         """получает список всех компаний и количество вакансий у каждой компании"""
         return self.__execute_query("SELECT name, amount FROM employers")
+
+
+    def get_all_vacancies(self):
+        """
+        получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию
+        """
+        return self.__execute_query("SELECT employers.name, vacancies.name, salary_from, salary_to, url FROM vacancies INNER JOIN employers ON employers.id = vacancies.employer")
