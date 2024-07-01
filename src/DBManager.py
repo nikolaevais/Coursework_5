@@ -42,3 +42,11 @@ class DBManager:
     def get_vacancies_with_higher_salary(self):
         """"получает список всех вакансий, у которых зарплата выше средней по всем вакансиям"""
         return self.__execute_query(f"SELECT *FROM vacancies WHERE salary_from > (SELECT AVG(salary_from) FROM vacancies)")
+
+
+
+    def get_vacancies_with_keyword(self, user_answer):
+        """получает список всех вакансий, в названии которых содержатся переданные в метод слова, например python"""
+        return self.__execute_query(f"SELECT *FROM vacancies WHERE name LIKE '%{user_answer}%' OR name LIKE '%{user_answer.title()}%'")
+
+
