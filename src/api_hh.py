@@ -20,3 +20,10 @@ class HHApi:
         for employer in data:
             employers.append({"id": employer["id"], "name": employer["name"], "amount": employer["open_vacancies"]})
         return employers
+
+    def __get_vacancies_on_employer(self, id):
+        """подключениe к API HH.ru и получение вакансий 10 популярных работадателей"""
+        params = {"employer_id": id}
+        response = requests.get("https://api.hh.ru/vacancies", params=params)
+        if response.status_code == 200:
+            return response.json()["items"]
