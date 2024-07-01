@@ -20,3 +20,7 @@ class DBManager:
 
         conn.close()
         return result
+
+    def get_companies_and_vacancies_count(self):
+        """получает список всех компаний и количество вакансий у каждой компании"""
+        return self.__execute_query("SELECT name, amount FROM employers")
