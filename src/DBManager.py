@@ -31,3 +31,8 @@ class DBManager:
         получает список всех вакансий с указанием названия компании, названия вакансии и зарплаты и ссылки на вакансию
         """
         return self.__execute_query("SELECT employers.name, vacancies.name, salary_from, salary_to, url FROM vacancies INNER JOIN employers ON employers.id = vacancies.employer")
+
+
+    def get_avg_salary(self):
+        """получает среднюю зарплату по вакансиям"""
+        return self.__execute_query("SELECT AVG(salary_from) AS avg_salary_from FROM vacancies")
