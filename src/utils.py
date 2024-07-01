@@ -18,3 +18,33 @@ def create_database(db_name):
 
     cur.close()
     conn.close()
+
+
+
+def create_tables(db_name):
+    """подключение к базе данных и создание в ней двух таблиц: employers, vacancies"""
+    conn = psycopg2.connect(dbname=db_name, user=os.getenv("user"),
+                            password=os.getenv("password"), host=os.getenv("host"),
+                            port=os.getenv("port"))
+
+    with conn:
+        with conn.cursor() as cur:
+            cur.execute("""CREATE TABLE employers (
+                        id INTEGER PRIMARY KEY,
+                        name VARCHAR(100) UNIQUE NOT NULL,
+                        amount INTEGER NOT NULL
+                        )
+                        """)
+
+            cur.execute("""CREATE TABLE vacancies (
+                        id INTEGER PRIMARY KEY,
+                        name VARCHAR(100) NOT NULL,
+                        url VARCHAR(100) NOT NULL,
+                        salary_from INTEGER,
+                        salary_to INTEGER,
+                        employer INTEGER REFERENCES employers(id),
+                        area VARCHAR(100) NOT NULL
+                        )
+                        """)
+
+    conn.close()
