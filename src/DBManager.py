@@ -36,3 +36,9 @@ class DBManager:
     def get_avg_salary(self):
         """получает среднюю зарплату по вакансиям"""
         return self.__execute_query("SELECT AVG(salary_from) AS avg_salary_from FROM vacancies")
+
+
+
+    def get_vacancies_with_higher_salary(self):
+        """"получает список всех вакансий, у которых зарплата выше средней по всем вакансиям"""
+        return self.__execute_query(f"SELECT *FROM vacancies WHERE salary_from > (SELECT AVG(salary_from) FROM vacancies)")
