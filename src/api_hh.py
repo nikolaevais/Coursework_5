@@ -11,3 +11,12 @@ class HHApi:
 
         if response.status_code == 200:
             return response.json()['items']
+
+
+    def get_employers(self):
+        """сохранение списка работадателей"""
+        employers = []
+        data = self.__get_request()
+        for employer in data:
+            employers.append({"id": employer["id"], "name": employer["name"], "amount": employer["open_vacancies"]})
+        return employers
