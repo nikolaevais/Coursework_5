@@ -1,4 +1,5 @@
-mport os
+import psycopg2
+import os
 import dotenv
 
 dotenv.load_dotenv()
