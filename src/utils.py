@@ -48,3 +48,21 @@ def create_tables(db_name):
                         """)
 
     conn.close()
+
+
+def insert_data_in_tables(db_name):
+    """заполнение данными таблиц employers, vacancies"""
+    hh = HHApi()
+    employers = hh.get_employers()
+    vacancies = hh.get_all_vacancies()
+    conn = psycopg2.connect(dbname=db_name, user=os.getenv("user"),
+                                password=os.getenv("password"), host=os.getenv("host"),
+                                port=os.getenv("port"))
+    with conn:
+        with conn.cursor() as cur:
+            for employer in employers:
+                    cur.execute("""INSERT INTO employers VALUES (%s, %s, %s)""", (employer["id"], employer ["name"], employer["amount"]))
+            for vacancy in vacancies:
+                    cur.execute("""INSERT INTO vacancies VALUES (%s, %s, %s, %s, %s, %s, %s)""", (vacancy["id"], vacancy["name"], vacancy["url"],
+                                                                                              vacancy["salary_from"], vacancy["salary_to"], vacancy["employer"], vacancy["area"]))
+    conn.close()
